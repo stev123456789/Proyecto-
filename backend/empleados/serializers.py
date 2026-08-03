@@ -19,3 +19,4 @@ class EmpleadoSerializer(serializers.ModelSerializer):
 # Serializer encargado de transformar los datos del modelo Empleado
 # a formato JSON para enviarlos mediante la API REST
  # Campo calculado que permite obtener el nombre completo del empleado
+ # utilizando un método personalizado
