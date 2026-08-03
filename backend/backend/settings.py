@@ -111,7 +111,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'django_rest_bdd',
         'USER': 'postgres',
-        'PASSWORD': '12345',
+        'PASSWORD': '1234',
         'HOST': '127.0.0.1',  # O la IP de la máquina con BD si está en otra laptop
         'PORT': '5432',
     }

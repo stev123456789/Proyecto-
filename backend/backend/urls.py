@@ -24,9 +24,13 @@ from drf_spectacular.views import (
     SpectacularRedocView, 
     SpectacularSwaggerView,
 )
+from .auth_views import SuperuserTokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/token/', SuperuserTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # Sistema Hotelero
     path('api/', include('habitaciones.urls')),
     path('api/', include('huespedes.urls')),
