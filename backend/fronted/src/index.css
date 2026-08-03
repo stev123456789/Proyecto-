@@ -66,6 +66,10 @@ body {
   box-sizing: border-box;
 }
 
+.empleados-crud {
+  font-family: 'Arial', sans-serif;
+}
+
 h1,
 h2 {
   font-family: var(--heading);

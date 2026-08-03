@@ -108,7 +108,7 @@ function Empleados() {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 empleados-crud">
       <h1>Gestión de Empleados</h1>
       
       {error && <div className="alert alert-danger">{error}</div>}
