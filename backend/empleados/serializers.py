@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Empleado
 
+# Importa las clases necesarias de Django REST Framework para crear serializers
 class EmpleadoSerializer(serializers.ModelSerializer):
     nombre_completo = serializers.SerializerMethodField()
     
