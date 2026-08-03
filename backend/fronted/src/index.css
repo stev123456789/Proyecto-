@@ -68,6 +68,35 @@ body {
 
 .empleados-crud {
   font-family: 'Arial', sans-serif;
+  color: #084b8a;
+}
+
+.empleados-crud h1,
+.empleados-crud h5,
+.empleados-crud .form-label,
+.empleados-crud table,
+.empleados-crud .badge {
+  color: #084b8a;
+}
+
+.empleados-crud .card {
+  background-color: #e7f3ff;
+  border-color: #b6dbff;
+}
+
+.empleados-crud .btn-primary {
+  background-color: #3da9fc;
+  border-color: #3da9fc;
+}
+
+.empleados-crud .btn-primary:hover,
+.empleados-crud .btn-primary:focus {
+  background-color: #2d86d8;
+  border-color: #2d86d8;
+}
+
+.empleados-crud .form-control {
+  border-color: #b6dbff;
 }
 
 h1,
