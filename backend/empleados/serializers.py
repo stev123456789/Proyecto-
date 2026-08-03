@@ -18,3 +18,4 @@ class EmpleadoSerializer(serializers.ModelSerializer):
 # Importa el modelo Empleado desde el archivo models.py de la misma aplicación
 # Serializer encargado de transformar los datos del modelo Empleado
 # a formato JSON para enviarlos mediante la API REST
+ # Campo calculado que permite obtener el nombre completo del empleado
