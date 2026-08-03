@@ -1,0 +1,2 @@
+from .auth_views import SuperuserTokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView
