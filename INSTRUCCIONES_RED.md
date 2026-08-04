@@ -65,7 +65,24 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 8. **IMPORTANTE:** Ejecuta el backend escuchando en tu IP local
+### 8. Ejecuta el backend en Linux para la LAN
+Si tu backend está en Linux y tus clientes son Windows, ejecuta el servidor en todas las interfaces:
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+
+> En una topología en estrella, el servidor Linux es el nodo central y Windows se conecta a él usando su IP.
+
+### 9. Configura Windows para conectarse al backend Linux
+En Windows, abre `backend/fronted/src/services/api.js` y reemplaza el valor de `localhost` con la IP del Linux:
+```javascript
+const backendIP = '192.168.1.100';
+```
+
+También puedes usar el formulario de login para introducir la IP del servidor backend.
+
+### 10. Ejecuta el backend escuchando en tu IP local (opcional)
+Si prefieres no usar `0.0.0.0`, ejecuta Django directamente en la IP del servidor Linux:
 ```powershell
 # Reemplaza 192.168.1.100 con tu IP real
 python manage.py runserver 192.168.1.100:8000

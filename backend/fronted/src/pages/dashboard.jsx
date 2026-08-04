@@ -1,7 +1,13 @@
 import { useNavigate } from 'react-router-dom';
+import { clearAuthToken } from '../services/api';
 
 function Dashboard(){
     const navigate = useNavigate();
+
+    const handleLogout = () => {
+        clearAuthToken();
+        navigate('/login');
+    };
 
     const menuItems = [
         { label: 'Habitaciones', path: '/dashboard/habitaciones', icon: '🛏️' },
@@ -15,8 +21,15 @@ function Dashboard(){
         <div className="container-fluid py-4 px-4">
             <div className="card border-0 shadow-sm mb-4">
                 <div className="card-body p-4">
-                    <h3 className="h3 font-weight-bold text-dark mb-3">🏨 Gestión de Hotel</h3>
-                    <p className="text-muted">Selecciona una opción para continuar.</p>
+                    <div className="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h3 className="h3 font-weight-bold text-dark">🏨 Gestión de Hotel</h3>
+                            <p className="text-muted mb-0">Selecciona una opción para continuar.</p>
+                        </div>
+                        <button className="btn btn-outline-danger" onClick={handleLogout}>
+                            Cerrar sesión
+                        </button>
+                    </div>
                 </div>
             </div>
 

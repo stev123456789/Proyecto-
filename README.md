@@ -57,21 +57,50 @@ Una vez que el backend esté corriendo, accede a:
 
 ## 🌐 Acceso en Red Distribuida
 
-Para acceder desde otra máquina, reemplaza `localhost` con la IP local:
+Para acceder desde otra máquina, reemplaza `localhost` con la IP local del servidor Linux que ejecuta el backend.
+
+### Topología LAN en Estrella
+
+En una red LAN en estrella, el servidor Linux actúa como nodo central. Los clientes Windows y móviles se conectan directamente al servidor central a través de su IP.
+
+- El backend debe ejecutarse en el host Linux con `0.0.0.0:8000`.
+- Los clientes Windows usan la IP del Linux, por ejemplo `192.168.1.100`.
+- El firewall del servidor debe permitir conexiones entrantes al puerto `8000`.
 
 ### React
 
-Edita `fronted/src/services/api.js`:
+Edita `fronted/src/services/api.js` o usa el login del frontend para establecer la IP del servidor Linux:
 ```javascript
-const backendIP = '192.168.1.100';  // Tu IP
+const backendIP = '192.168.1.100';  // IP de Linux
 ```
 
 ### Flutter
 
-Edita `mobile/lib/services/hotel_api_service.dart`:
+Edita `mobile/lib/services/hotel_api_service.dart` o el archivo de API equivalente:
 ```dart
-static const String baseUrl = 'http://192.168.1.100:8000/api';  // Tu IP
+static const String baseUrl = 'http://192.168.1.100:8000/api';  // IP de Linux
 ```
+
+### Windows -> Linux
+
+1. En el servidor Linux:
+```bash
+cd /ruta/al/proyecto/backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver 0.0.0.0:8000
+```
+2. En el cliente Windows:
+```powershell
+cd \ruta\al\proyecto\backend\fronted
+npm install
+npm run dev
+```
+3. En el login del frontend, usa la IP del servidor Linux y tus credenciales.
 
 ## 📁 Estructura del Proyecto
 

@@ -1,13 +1,7 @@
 import axios from 'axios';
 
-// Detecta automáticamente la IP del servidor
-// Por defecto usa localhost, pero puedes cambiarla manualmente si es necesario
-const getBaseURL = () => {
-  // Cambiar 'localhost' por la IP de tu laptop si accedes desde otra máquina
-  // Ejemplo: 'http://192.168.1.100:8000/api/'
-  const backendIP = localStorage.getItem('backendIP') || 'localhost';
-  return `http://${backendIP}:8000/api/`;
-};
+const getBackendIP = () => localStorage.getItem('backendIP') || 'localhost';
+const getBaseURL = () => `http://${getBackendIP()}:8000/api/`;
 
 const api = axios.create({
   baseURL: getBaseURL(),
@@ -16,10 +10,37 @@ const api = axios.create({
   },
 });
 
-export default api;
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
-// Función para cambiar el servidor de forma dinámica (útil para testing)
 export const setBackendIP = (ip) => {
-  localStorage.setItem('backendIP', ip);
-  api.defaults.baseURL = `http://${ip}:8000/api/`;
+  const backendIP = (ip || 'localhost').trim();
+  localStorage.setItem('backendIP', backendIP);
+  api.defaults.baseURL = `http://${backendIP}:8000/api/`;
 };
+
+export const setAuthToken = (token, refreshToken) => {
+  localStorage.setItem('access_token', token);
+  if (refreshToken) {
+    localStorage.setItem('refresh_token', refreshToken);
+  }
+  api.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+export const clearAuthToken = () => {
+  localStorage.removeItem('access_token');
+  localStorage.removeItem('refresh_token');
+  delete api.defaults.headers.common.Authorization;
+};
+
+export const isLoggedIn = () => \!\!localStorage.getItem('access_token');
+
+export default api;
