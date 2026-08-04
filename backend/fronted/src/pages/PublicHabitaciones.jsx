@@ -1,21 +1,22 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const habitacionesDemo = [
   {
     id: 1,
     numero: '101',
-    tipo: 'Sencilla',
+    tipo: 'Deluxe',
     capacidad: 2,
     precio: 120,
-    descripcion: 'Cómoda habitación individual con vista al jardín.',
+    descripcion: 'Habitación suave y luminosa, ideal para parejas en busca de confort.',
   },
   {
     id: 2,
     numero: '205',
-    tipo: 'Doble',
+    tipo: 'Standard',
     capacidad: 4,
     precio: 220,
-    descripcion: 'Amplia habitación para parejas o familias pequeñas.',
+    descripcion: 'Espacio amplio con estilo contemporáneo, perfecto para familias pequeñas.',
   },
   {
     id: 3,
@@ -23,47 +24,79 @@ const habitacionesDemo = [
     tipo: 'Suite',
     capacidad: 2,
     precio: 340,
-    descripcion: 'Suite moderna con sala de estar y baño privado.',
+    descripcion: 'Suite premium con sala de estar privada y servicios exclusivos.',
   },
 ];
 
-function PublicHabitaciones() {
-  return (
-    <div className="container py-5">
-      <header className="d-flex align-items-center justify-content-between mb-5">
-        <div>
-          <h1 className="display-5">Habitaciones</h1>
-          <p className="lead text-muted">Explora nuestras habitaciones y conoce sus características principales.</p>
-        </div>
-        <Link to="/login" className="btn btn-primary">
-          Iniciar sesión
-        </Link>
-      </header>
+const filtros = ['Todas', 'Deluxe', 'Standard', 'Suite'];
 
-      <div className="row g-4">
-        {habitacionesDemo.map((habitacion) => (
-          <div key={habitacion.id} className="col-md-4">
-            <div className="card h-100 shadow-sm">
-              <div className="card-body">
-                <h5 className="card-title">Habitación {habitacion.numero}</h5>
-                <p className="card-text">{habitacion.tipo}</p>
-                <p className="card-text">Capacidad: {habitacion.capacidad} personas</p>
-                <p className="card-text">Precio: ${habitacion.precio} / noche</p>
-                <p className="text-muted">{habitacion.descripcion}</p>
-              </div>
-            </div>
+function PublicHabitaciones() {
+  const [filtro, setFiltro] = useState('Todas');
+  const habitacionesFiltradas = filtro === 'Todas'
+    ? habitacionesDemo
+    : habitacionesDemo.filter((habitacion) => habitacion.tipo === filtro);
+
+  return (
+    <div className="public-page">
+      <section className="rooms-hero">
+        <div className="rooms-hero__copy">
+          <span className="hero-badge">Explora nuestras habitaciones</span>
+          <h1>Habitaciones cómodas y sofisticadas para cada tipo de viaje</h1>
+          <p className="hero-text">
+            Elige entre Deluxe, Standard y Suite. Conoce precios, capacidad y características desde un solo lugar.
+          </p>
+          <div className="hero-actions">
+            <Link to="/" className="btn btn-secondary">
+              Volver a Inicio
+            </Link>
+            <Link to="/login" className="btn btn-primary">
+              Iniciar sesión
+            </Link>
           </div>
+        </div>
+      </section>
+
+      <div className="rooms-filter">
+        {filtros.map((opcion) => (
+          <button
+            key={opcion}
+            type="button"
+            className={`rooms-filter__pill ${filtro === opcion ? 'active' : ''}`}
+            onClick={() => setFiltro(opcion)}
+          >
+            {opcion}
+          </button>
         ))}
       </div>
 
-      <div className="mt-5">
-        <Link to="/" className="btn btn-outline-secondary me-3">
-          Volver a Inicio
-        </Link>
-        <Link to="/login" className="btn btn-outline-primary">
-          Acceder al login
-        </Link>
-      </div>
+      <section className="rooms-grid">
+        {habitacionesFiltradas.map((habitacion) => (
+          <article key={habitacion.id} className="room-card">
+            <div className="room-card__image">Habitación {habitacion.numero}</div>
+            <div className="room-card__content">
+              <h3 className="room-card__title">{habitacion.tipo}</h3>
+              <div className="room-card__meta">
+                <span>Capacidad: {habitacion.capacidad}</span>
+                <span>Precio: ${habitacion.precio}/noche</span>
+              </div>
+              <p className="room-card__description">{habitacion.descripcion}</p>
+            </div>
+            <div className="room-card__footer">
+              <div className="room-card__price">${habitacion.precio}</div>
+              <Link to="/login" className="btn room-card__button">
+                Reservar
+              </Link>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      {habitacionesFiltradas.length === 0 && (
+        <div className="room-card room-card--empty">
+          <h3>No se encontraron habitaciones</h3>
+          <p>Prueba otro filtro o regresa a la página de inicio.</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -2,50 +2,42 @@ import { Link } from 'react-router-dom';
 
 function PublicInicio() {
   return (
-    <div className="container py-5">
-      <header className="d-flex align-items-center justify-content-between mb-5">
-        <div>
-          <h1 className="display-5">Bienvenido a Hotel Los Àlamos</h1>
-          <p className="lead text-muted">Descubre las habitaciones disponibles y comienza tu experiencia.</p>
-        </div>
-        <Link to="/login" className="btn btn-primary">
-          Iniciar sesión
-        </Link>
-      </header>
-
-      <div className="card shadow-sm p-4 mb-4">
-        <h2>Inicio</h2>
-        <p>
-          Esta es la vista pública del proyecto. Desde aquí puedes navegar a las habitaciones disponibles y acceder al área privada mediante el login.
-        </p>
-        <div className="mt-4">
-          <Link to="/habitaciones" className="btn btn-outline-primary me-3">
-            Ver habitaciones
-          </Link>
-          <Link to="/login" className="btn btn-outline-secondary">
-            Ir al login
-          </Link>
-        </div>
-      </div>
-
-      <div className="row gx-4 gy-4">
-        <div className="col-md-6">
-          <div className="card border-primary h-100 p-4">
-            <h3>Reservas sencillas</h3>
-            <p className="text-muted">
-              Consulta habitaciones disponibles y obtén información básica antes de iniciar sesión.
-            </p>
+    <div className="public-page">
+      <section className="hero">
+        <div className="hero-copy">
+          <span className="hero-badge">Hotel Los Álamos</span>
+          <h1>Encuentra la habitación perfecta para tu próxima estancia</h1>
+          <p className="hero-text">
+            Explora nuestras habitaciones públicas, revisa disponibilidad y accede fácilmente al login para gestionar tu reserva.
+          </p>
+          <div className="hero-actions">
+            <Link to="/habitaciones" className="btn btn-outline-primary">
+              Ver habitaciones
+            </Link>
+            <Link to="/login" className="btn btn-primary">
+              Iniciar sesión
+            </Link>
           </div>
         </div>
-        <div className="col-md-6">
-          <div className="card border-success h-100 p-4">
-            <h3>¿A dónde deseas ir?</h3>
-            <p className="text-muted">
-              Navega a la sección de habitaciones públicas para ver los tipos y características principales.
-            </p>
-          </div>
+      </section>
+
+      <section className="feature-grid">
+        <div className="feature-card">
+          <div className="feature-icon">🏨</div>
+          <h3>Reservas sin complicaciones</h3>
+          <p>Consulta disponibilidad y elige la mejor habitación antes de iniciar sesión.</p>
         </div>
-      </div>
+        <div className="feature-card">
+          <div className="feature-icon">🌟</div>
+          <h3>Diseño moderno</h3>
+          <p>Interfaz clara, tipografías suaves y botones con estilo para una navegación más intuitiva.</p>
+        </div>
+        <div className="feature-card">
+          <div className="feature-icon">🔒</div>
+          <h3>Acceso seguro</h3>
+          <p>Inicia sesión para acceder al dashboard y continuar con tu gestión de reservas.</p>
+        </div>
+      </section>
     </div>
   );
 }
