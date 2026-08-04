@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -106,16 +107,34 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'django_rest_bdd',
-        'USER': 'admin',
-        'PASSWORD': '123456',
-        'HOST': '192.168.1.10',  # cambio aqui patra que funcione en la red local, cambiar para la red LAN por 192.168.1.10
-        'PORT': '5432',
+DB_NAME = os.getenv('DB_NAME', 'django_rest_bdd')
+DB_USER = os.getenv('DB_USER', 'postgres')
+DB_PASSWORD = os.getenv('DB_PASSWORD', '1234')
+DB_HOST = os.getenv('DB_HOST', '192.168.1.10')
+DB_PORT = os.getenv('DB_PORT', '5432')
+USE_SQLITE = os.getenv('USE_SQLITE', 'true').lower() in ('1', 'true', 'yes')
+
+if USE_SQLITE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
+        }
+    }
+
+
+
 
 
 # Password validation
