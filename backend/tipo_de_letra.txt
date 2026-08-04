@@ -16,3 +16,4 @@ Tipo de letra: serif minimalista
 Tipo de letra: sans serif limpia
 Tipo de letra: texto elegante
 Tipo de letra: contraste alto
+Tipo de letra: cuerpo legible
