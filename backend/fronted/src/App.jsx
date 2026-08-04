@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from './pages/login';
+import Register from './pages/Register';
 import Dashboard from './pages/dashboard';
 import Habitaciones from './pages/Habitaciones';
 import Huespedes from './pages/Huespedes';
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<PublicInicio />} />
         <Route path="/habitaciones" element={<PublicHabitaciones />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
         <Route path="/dashboard/habitaciones" element={<RequireAuth><Habitaciones /></RequireAuth>} />
         <Route path="/dashboard/huespedes" element={<RequireAuth><Huespedes /></RequireAuth>} />

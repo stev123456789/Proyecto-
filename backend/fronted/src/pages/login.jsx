@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import api, { setAuthToken, setBackendIP } from '../services/api';
 
 function Login() {
@@ -24,60 +24,75 @@ function Login() {
       navigate('/dashboard');
     } catch (err) {
       console.error('Login error', err);
-      setError('Usuario o contraseña inválidos. Verifica tu servidor y credenciales.');
+      setError('Usuario o contraseña inválidos. Verifica tus credenciales y servidor.');
     }
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-5">
-          <div className="card shadow-sm">
-            <div className="card-body p-4">
-              <h3 className="card-title mb-4 text-center">Iniciar sesión</h3>
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-panel auth-panel--brand">
+          <div className="auth-panel__content">
+            <span className="auth-panel__tag">Bienvenido de nuevo.</span>
+            <h1>Accede a tu cuenta</h1>
+            <p>Ingresa tus credenciales para continuar.</p>
+          </div>
+        </div>
 
-              {error && <div className="alert alert-danger">{error}</div>}
-
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label className="form-label">IP del backend</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={backendIP}
-                    onChange={(e) => setBackendIPState(e.target.value)}
-                    placeholder="localhost o 192.168.1.100"
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Usuario</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <div className="mb-3">
-                  <label className="form-label">Contraseña</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-
-                <button type="submit" className="btn btn-primary w-100">
-                  Entrar
-                </button>
-              </form>
+        <div className="auth-panel auth-panel--form">
+          <div className="auth-header">
+            <div>
+              <h2>Iniciar sesión</h2>
+              <p>Accede con tu usuario y contraseña.</p>
             </div>
+            <div className="auth-tabs">
+              <span className="auth-tab auth-tab--active">Iniciar sesión</span>
+              <Link to="/register" className="auth-tab auth-tab--inactive">
+                Registrarse
+              </Link>
+            </div>
+          </div>
+
+          {error && <div className="auth-alert auth-alert--error">{error}</div>}
+
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <label className="auth-label">Usuario</label>
+            <input
+              className="auth-input"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingresa tu usuario"
+              required
+            />
+
+            <label className="auth-label">Contraseña</label>
+            <input
+              className="auth-input"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Ingresa tu contraseña"
+              required
+            />
+
+            <label className="auth-label">IP del backend</label>
+            <input
+              className="auth-input"
+              type="text"
+              value={backendIP}
+              onChange={(e) => setBackendIPState(e.target.value)}
+              placeholder="localhost o 192.168.1.100"
+              required
+            />
+
+            <button type="submit" className="auth-button auth-button--primary">
+              Iniciar sesión
+            </button>
+          </form>
+
+          <div className="auth-footer">
+            ¿No tienes cuenta? <Link to="/register">Regístrate gratis</Link>
           </div>
         </div>
       </div>
