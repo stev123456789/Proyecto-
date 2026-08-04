@@ -179,7 +179,7 @@ a {
 }
 
 .hero-card__field div {
-  background: white;
+  background: #f9fbff;
   border-radius: 20px;
   padding: 1rem 1.1rem;
   box-shadow: 0 16px 35px rgba(15, 23, 42, 0.08);
