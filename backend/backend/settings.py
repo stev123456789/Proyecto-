@@ -112,7 +112,7 @@ DATABASES = {
         'NAME': 'django_rest_bdd',
         'USER': 'admin',
         'PASSWORD': '123456',
-        'HOST': '192.168.1.10',  # O la IP de la máquina con BD si está en otra laptop
+        'HOST': '192.168.1.10',  # cambio aqui patra que funcione en la red local, cambiar para la red LAN por 192.168.1.10
         'PORT': '5432',
     }
 }

@@ -7,13 +7,18 @@ from .models import Reserva
 from .serializers import ReservaSerializer
 
 class ReservaViewSet(viewsets.ModelViewSet):
-    queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields = ['estado', 'habitacion', 'huesped']
     search_fields = ['huesped__nombre', 'huesped__apellido', 'habitacion__numero']
     ordering_fields = ['fecha_ingreso', 'fecha_salida', 'creado']
     ordering = ['-fecha_ingreso']
+
+    def get_queryset(self):
+        queryset = Reserva.objects.all()
+        if self.request.query_params.get('sin_factura') in ['1', 'true', 'True']:
+            queryset = queryset.filter(factura__isnull=True)
+        return queryset
     
     @action(detail=True, methods=['post'])
     def hacer_checkin(self, request, pk=None):

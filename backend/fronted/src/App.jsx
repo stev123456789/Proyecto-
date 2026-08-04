@@ -6,6 +6,8 @@ import Huespedes from './pages/Huespedes';
 import Empleados from './pages/Empleados';
 import Reservas from './pages/Reservas';
 import Facturas from './pages/Facturas';
+import PublicInicio from './pages/PublicInicio';
+import PublicHabitaciones from './pages/PublicHabitaciones';
 import { isLoggedIn } from './services/api';
 
 const RequireAuth = ({ children }) => {
@@ -16,7 +18,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to={isLoggedIn() ? "/dashboard" : "/login"} replace />} />
+        <Route path="/" element={<PublicInicio />} />
+        <Route path="/habitaciones" element={<PublicHabitaciones />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
         <Route path="/dashboard/habitaciones" element={<RequireAuth><Habitaciones /></RequireAuth>} />

@@ -35,6 +35,7 @@ export const empleadosService = {
 // Reservas
 export const reservasService = {
   getAll: () => api.get('reservas/'),
+  getSinFactura: () => api.get('reservas/?sin_factura=1'),
   getById: (id) => api.get(`reservas/${id}/`),
   create: (data) => api.post('reservas/', data),
   update: (id, data) => api.put(`reservas/${id}/`, data),

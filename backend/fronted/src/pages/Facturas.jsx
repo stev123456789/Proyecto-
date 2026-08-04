@@ -14,6 +14,7 @@ function Facturas() {
     precio_noche: '',
     subtotal_hospedaje: '',
     servicios_adicionales: '',
+    descripcion_servicios: '',
     porcentaje_impuesto: '0',
     total: '',
     estado: 'pendiente',
@@ -30,7 +31,7 @@ function Facturas() {
     try {
       const [resFacturas, resReservas] = await Promise.all([
         facturasService.getAll(),
-        reservasService.getAll()
+        reservasService.getSinFactura()
       ]);
       setFacturas(resFacturas.data);
       setReservas(resReservas.data);
@@ -66,16 +67,18 @@ function Facturas() {
     e.preventDefault();
     try {
       const datos = {
-        ...formData,
-        reserva: parseInt(formData.reserva),
-        numero_noches: parseInt(formData.numero_noches),
-        precio_noche: parseFloat(formData.precio_noche),
-        subtotal_hospedaje: parseFloat(formData.subtotal_hospedaje),
-        servicios_adicionales: parseFloat(formData.servicios_adicionales),
-        porcentaje_impuesto: parseFloat(formData.porcentaje_impuesto),
-        total: parseFloat(formData.total),
+        reserva: parseInt(formData.reserva, 10) || 0,
+        numero_factura: formData.numero_factura,
+        numero_noches: parseInt(formData.numero_noches, 10) || 0,
+        precio_noche: parseFloat(formData.precio_noche) || 0,
+        subtotal_hospedaje: parseFloat(formData.subtotal_hospedaje) || 0,
+        servicios_adicionales: parseFloat(formData.servicios_adicionales) || 0,
+        descripcion_servicios: formData.descripcion_servicios || '',
+        porcentaje_impuesto: parseFloat(formData.porcentaje_impuesto) || 0,
+        estado: formData.estado,
+        observaciones: formData.observaciones,
       };
-      
+
       if (editingId) {
         await facturasService.update(editingId, datos);
       } else {
@@ -88,6 +91,7 @@ function Facturas() {
         precio_noche: '',
         subtotal_hospedaje: '',
         servicios_adicionales: '',
+        descripcion_servicios: '',
         porcentaje_impuesto: '0',
         total: '',
         estado: 'pendiente',
@@ -98,7 +102,11 @@ function Facturas() {
       cargarDatos();
     } catch (error) {
       console.error('Error al guardar:', error);
-      setError('Error al guardar la factura');
+      const backendMessage =
+        error.response?.data?.detail ||
+        JSON.stringify(error.response?.data) ||
+        error.message;
+      setError(`Error al guardar la factura: ${backendMessage}`);
     }
   };
 
@@ -110,6 +118,7 @@ function Facturas() {
       precio_noche: factura.precio_noche,
       subtotal_hospedaje: factura.subtotal_hospedaje,
       servicios_adicionales: factura.servicios_adicionales,
+      descripcion_servicios: factura.descripcion_servicios || '',
       porcentaje_impuesto: factura.porcentaje_impuesto,
       total: factura.total,
       estado: factura.estado,
@@ -154,6 +163,7 @@ function Facturas() {
       precio_noche: '',
       subtotal_hospedaje: '',
       servicios_adicionales: '',
+      descripcion_servicios: '',
       porcentaje_impuesto: '0',
       total: '',
       estado: 'pendiente',
@@ -190,6 +200,9 @@ function Facturas() {
                     required
                   >
                     <option value="">Seleccionar reserva</option>
+                    {reservas.length === 0 && (
+                      <option value="" disabled>No hay reservas disponibles</option>
+                    )}
                     {reservas.map(r => (
                       <option key={r.id} value={r.id}>
                         ID {r.id} - {r.huesped_detalle.nombre_completo}
@@ -219,6 +232,7 @@ function Facturas() {
                     name="numero_noches"
                     value={formData.numero_noches}
                     onChange={handleInputChange}
+                    required
                   />
                 </div>
                 <div className="col-md-4 mb-3">
@@ -230,6 +244,7 @@ function Facturas() {
                     name="precio_noche"
                     value={formData.precio_noche}
                     onChange={handleInputChange}
+                    required
                   />
                 </div>
                 <div className="col-md-4 mb-3">
@@ -241,6 +256,7 @@ function Facturas() {
                     name="subtotal_hospedaje"
                     value={formData.subtotal_hospedaje}
                     onChange={handleInputChange}
+                    required
                   />
                 </div>
               </div>
@@ -296,6 +312,17 @@ function Facturas() {
                     <option value="cancelada">Cancelada</option>
                   </select>
                 </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Descripción Servicios</label>
+                <textarea 
+                  className="form-control" 
+                  name="descripcion_servicios"
+                  value={formData.descripcion_servicios}
+                  onChange={handleInputChange}
+                  rows="2"
+                />
               </div>
 
               <div className="mb-3">

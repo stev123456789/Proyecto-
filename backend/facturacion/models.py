@@ -52,6 +52,12 @@ class Factura(models.Model):
         verbose_name = 'Factura'
         verbose_name_plural = 'Facturas'
     
+    def save(self, *args, **kwargs):
+        # Calcular totales automáticamente antes de guardar
+        if self.subtotal_hospedaje is not None and self.servicios_adicionales is not None and self.porcentaje_impuesto is not None:
+            self.calcular_total()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"Factura {self.numero_factura}"
     
