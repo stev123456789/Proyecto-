@@ -8,3 +8,4 @@ Tipo de letra 7
 Tipo de letra 8
 Tipo de letra 9
 Tipo de letra 10
+Tipo de letra: fuente moderna
