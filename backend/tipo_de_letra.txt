@@ -14,3 +14,4 @@ Tipo de letra: espaciado amplio
 Tipo de letra: negrita sutil
 Tipo de letra: serif minimalista
 Tipo de letra: sans serif limpia
+Tipo de letra: texto elegante
