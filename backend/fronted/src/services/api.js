@@ -41,6 +41,6 @@ export const clearAuthToken = () => {
   delete api.defaults.headers.common.Authorization;
 };
 
-export const isLoggedIn = () => \!\!localStorage.getItem('access_token');
+export const isLoggedIn = () => !!localStorage.getItem('access_token');
 
 export default api;
